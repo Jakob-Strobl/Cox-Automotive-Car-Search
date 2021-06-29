@@ -49,7 +49,7 @@ namespace api.Controllers
         // In the scope I wouldn't have to resize... but I'll still use list
 
         // Get all vehicles on initial load
-        [HttpGet("api/[controller]")]
+        [HttpGet]
         public List<Vehicle> Index()
         {
             return _vehicles;
