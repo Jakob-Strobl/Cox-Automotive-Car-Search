@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace api
 {
-    public class Vechicle
+    public class Vehicle
     {
         // "id" field from json
         public Guid GUID { get; set; }

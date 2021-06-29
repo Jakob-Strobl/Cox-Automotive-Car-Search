@@ -27,3 +27,5 @@ C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\o
 C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\obj\Debug\net5.0\ref\api.dll
 C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\obj\Debug\net5.0\api.pdb
 C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\obj\Debug\net5.0\api.genruntimeconfig.cache
+C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\bin\Debug\net5.0\Sample Data\vehicles.json
+C:\Users\jakob\OneDrive\Desktop\cox automtive\Cox-Automtive-Car-Search\api\api\bin\Debug\net5.0\Newtonsoft.Json.dll
