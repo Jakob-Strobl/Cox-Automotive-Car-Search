@@ -1,6 +1,6 @@
 {
-  "name": "Stencil Starter",
-  "short_name": "Stencil",
+  "name": "Cox Automotive Vehicle Search",
+  "short_name": "Vehicle Search",
   "start_url": "/",
   "display": "standalone",
   "icons": [{

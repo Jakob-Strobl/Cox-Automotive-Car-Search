@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using api.Models;
+using System.Threading.Tasks;
 
 namespace api.Controllers
 {
@@ -11,32 +12,22 @@ namespace api.Controllers
     public class VehicleController : Controller
     {
         // Ideally you would use a database, but this is fine for now
-        private readonly List<Vehicle> _vehicles = new List<Vehicle>();
+        private readonly VehicleContext _vehicles = null;
 
-        public VehicleController()
+        public VehicleController(VehicleContext vehicles)
         {
             // Get all vehicles
-            _vehicles = LoadVehiclesJson();
-        }
-
-        private List<Vehicle> LoadVehiclesJson()
-        {
-            using (StreamReader reader = new StreamReader("Sample Data/vehicles.json"))
-            {
-                string vehicles_json = reader.ReadToEnd();
-                List<Vehicle> vehicles = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Vehicle>>(vehicles_json);
-                Console.WriteLine(vehicles.ToString());
-                return vehicles;
-            }
+            _vehicles = vehicles;
         }
 
         // Just keeping this here for messing around
-        [HttpGet("static/")]
+        // GET api/vehicle/static
+        [HttpGet("static")]
         public Vehicle Get()
         {
             return new Vehicle
             {
-                GUID = new Guid("c417a7a3-4508-4e7d-9189-d8df6641dd71"),
+                Id = new Guid("c417a7a3-4508-4e7d-9189-d8df6641dd71"),
                 Make = new string("Lincoln"),
                 Model = new string("MKT"),
                 Year = 2011,
@@ -48,11 +39,30 @@ namespace api.Controllers
         // According to quick google search List is the goto over Array since you dont have to handle resizing
         // In the scope I wouldn't have to resize... but I'll still use list
 
-        // Get all vehicles on initial load
-        [HttpGet]
-        public List<Vehicle> Index()
+        // Returns all vehicles
+        // GET api/vehicle/all
+        [HttpGet("all")]
+        public async Task<ActionResult<List<Vehicle>>> Index()
         {
-            return _vehicles;
+            return await _vehicles.Vehicles();
+        }
+
+        // Returns all vehicles
+        // GET api/vehicle/{number}
+        [HttpGet("{number}")]
+        public async Task<ActionResult<List<Vehicle>>> GetNumberOfVehicles(int? number)
+        {
+            Console.WriteLine(number);
+            if (number.HasValue)
+            {
+                List<Vehicle> vehicles = await _vehicles.Vehicles();
+                return vehicles.GetRange(0, number.Value);
+            }
+            else
+            {
+                List<Vehicle> vehicles = await _vehicles.Vehicles();
+                return vehicles.GetRange(0, 10);
+            }
         }
     }
 }

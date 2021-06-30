@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api
+namespace api.Models
 {
     public class Vehicle
     {
         // "id" field from json
-        public Guid GUID { get; set; }
+        public Guid Id { get; set; }
 
         public string Make { get; set; }
 
