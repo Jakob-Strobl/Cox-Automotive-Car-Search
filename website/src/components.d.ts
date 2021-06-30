@@ -5,51 +5,53 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Vehicle } from "./services/vehicle";
+import { Vehicle, VehicleApi } from "./services/vehicle";
 export namespace Components {
-    interface AppHome {
+    interface AppRoot {
+    }
+    interface AppTable {
+        "api": VehicleApi;
         "found_error": boolean;
         "vehicles": Vehicle[];
     }
-    interface AppRoot {
-    }
 }
 declare global {
-    interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
-    }
-    var HTMLAppHomeElement: {
-        prototype: HTMLAppHomeElement;
-        new (): HTMLAppHomeElement;
-    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLAppTableElement extends Components.AppTable, HTMLStencilElement {
+    }
+    var HTMLAppTableElement: {
+        prototype: HTMLAppTableElement;
+        new (): HTMLAppTableElement;
+    };
     interface HTMLElementTagNameMap {
-        "app-home": HTMLAppHomeElement;
         "app-root": HTMLAppRootElement;
+        "app-table": HTMLAppTableElement;
     }
 }
 declare namespace LocalJSX {
-    interface AppHome {
+    interface AppRoot {
+    }
+    interface AppTable {
+        "api"?: VehicleApi;
         "found_error"?: boolean;
         "vehicles"?: Vehicle[];
     }
-    interface AppRoot {
-    }
     interface IntrinsicElements {
-        "app-home": AppHome;
         "app-root": AppRoot;
+        "app-table": AppTable;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "app-table": LocalJSX.AppTable & JSXBase.HTMLAttributes<HTMLAppTableElement>;
         }
     }
 }

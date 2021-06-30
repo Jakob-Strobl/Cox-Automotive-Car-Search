@@ -20,13 +20,10 @@ export class AppRoot {
           </div>
         </header>
 
-        {/* Search bar and Records per page */}
-        <section></section>
-
         <main>
           <stencil-router>
             <stencil-route-switch scrollTopOffset={0}>
-              <stencil-route url="/" component="app-home" exact={true} />
+              <stencil-route url="/" component="app-table" exact={true} />
             </stencil-route-switch>
           </stencil-router>
         </main>
