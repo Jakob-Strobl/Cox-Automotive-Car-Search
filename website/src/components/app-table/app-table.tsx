@@ -66,7 +66,7 @@ export class AppTable {
                         </div>
                       </div>
     } else {
-      error_message = null;
+      error_message = '';
     }
 
     return (
