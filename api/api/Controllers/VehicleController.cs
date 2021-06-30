@@ -13,11 +13,49 @@ namespace api.Controllers
     {
         // Ideally you would use a database, but this is fine for now
         private readonly VehicleContext _vehicles = null;
+        private readonly int DefaultNumberOfVehicles = 10;
 
         public VehicleController(VehicleContext vehicles)
         {
             // Get all vehicles
             _vehicles = vehicles;
+        }
+
+        // Returns a slice of the vehicles[0..number]
+        private List<Vehicle> SliceOfVehicles(List<Vehicle> vehicles, int number)
+        {
+            if (vehicles.Count < number)
+            {
+                // Return all vehicles
+                return vehicles;
+            }
+            else
+            {
+                return vehicles.GetRange(0, number);
+            }
+        }
+
+        // Returns a List of all vehicles that match the query
+        private List<Vehicle> QueryAllVehicles(List<Vehicle> vehicles, string query)
+        {
+            // Case insensitive search
+            query = query.ToLower();
+            return vehicles.FindAll(
+                delegate (Vehicle vehicle)
+                {
+                    string make = (vehicle.Make ?? "").ToLower();
+                    string model = (vehicle.Model ?? "").ToLower();
+                    string year = vehicle.Year.ToString();
+                    string vin = (vehicle.Vin ?? "").ToLower();
+                    string trim = (vehicle.Trim ?? "").ToLower();
+
+                    return make.Contains(query)
+                        || model.Contains(query)
+                        || year.Contains(query)
+                        || vin.Contains(query)
+                        || trim.Contains(query);
+                }
+            );
         }
 
         // Just keeping this here for messing around
@@ -36,33 +74,37 @@ namespace api.Controllers
             };
         }
 
-        // According to quick google search List is the goto over Array since you dont have to handle resizing
-        // In the scope I wouldn't have to resize... but I'll still use list
-
         // Returns all vehicles
         // GET api/vehicle/all
         [HttpGet("all")]
-        public async Task<ActionResult<List<Vehicle>>> Index()
+        public async Task<ActionResult<List<Vehicle>>> All()
         {
             return await _vehicles.Vehicles();
         }
 
-        // Returns all vehicles
+        // GET api/vehicle/{number}/{query}
+        [HttpGet("all/{query}")]
+        public async Task<ActionResult<List<Vehicle>>> QueryAllVehicles(string query)
+        {
+            List<Vehicle> vehicles = await _vehicles.Vehicles();
+            return QueryAllVehicles(vehicles, query);
+        }
+
         // GET api/vehicle/{number}
         [HttpGet("{number}")]
-        public async Task<ActionResult<List<Vehicle>>> GetNumberOfVehicles(int? number)
+        public async Task<ActionResult<List<Vehicle>>> GetNumberOfVehicles(int number)
         {
-            Console.WriteLine(number);
-            if (number.HasValue)
-            {
-                List<Vehicle> vehicles = await _vehicles.Vehicles();
-                return vehicles.GetRange(0, number.Value);
-            }
-            else
-            {
-                List<Vehicle> vehicles = await _vehicles.Vehicles();
-                return vehicles.GetRange(0, 10);
-            }
+            List<Vehicle> vehicles = await _vehicles.Vehicles();
+            return SliceOfVehicles(vehicles, number);
+        }
+
+        // GET api/vehicle/{number}/{query}
+        [HttpGet("{number}/{query}")]
+        public async Task<ActionResult<List<Vehicle>>> QueryNumberOfVehicles(int number, string query)
+        {
+            List<Vehicle> vehicles = await _vehicles.Vehicles();
+            vehicles = QueryAllVehicles(vehicles, query);
+            return SliceOfVehicles(vehicles, number);
         }
     }
 }

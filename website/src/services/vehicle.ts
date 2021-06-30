@@ -12,9 +12,9 @@ export class VehicleApi {
         }
     }
 
-    async getAllVehicles(): Promise<Array<Vehicle>> {
+    async queryAllVehicles(query: string): Promise<Array<Vehicle>> {
         try {
-            const response = await fetch(`https://localhost:5001/api/Vehicle/all`, {
+            const response = await fetch(`https://localhost:5001/api/Vehicle/all/${query}`, {
                 credentials: 'include'
             });
             const json = await response.json();
@@ -28,9 +28,9 @@ export class VehicleApi {
         }
     }
 
-    async getVehicles(num='10'): Promise<Array<Vehicle>> {
+    async queryNumberOfVehicles(num: string, query: string): Promise<Array<Vehicle>> {
         try {
-            const response = await fetch(`https://localhost:5001/api/Vehicle/${num}`, {
+            const response = await fetch(`https://localhost:5001/api/Vehicle/${num}/${query}`, {
                 credentials: 'include'
             });
             const json = await response.json();

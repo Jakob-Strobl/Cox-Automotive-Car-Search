@@ -12,6 +12,8 @@ export namespace Components {
     interface AppTable {
         "api": VehicleApi;
         "found_error": boolean;
+        "records_selected": string;
+        "search_query": string;
         "vehicles": Vehicle[];
     }
 }
@@ -39,6 +41,8 @@ declare namespace LocalJSX {
     interface AppTable {
         "api"?: VehicleApi;
         "found_error"?: boolean;
+        "records_selected"?: string;
+        "search_query"?: string;
         "vehicles"?: Vehicle[];
     }
     interface IntrinsicElements {
